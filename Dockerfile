@@ -10,9 +10,9 @@ COPY ./ /go/src/
 
 RUN go build -v -o autoscaler main.go
 
-FROM hub.artifactory.gcp.anz/alpine:3.12.3
+FROM alpine:3.12.3
 
-COPY --from=builder /go/src/ob-vault-gopher /app/
+COPY --from=builder /go/src/autoscaler /app/
 
 WORKDIR /app
 

@@ -1,0 +1,24 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: camunda-autoscaler
+  labels:
+    app: camunda
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: camunda-autoscaler
+  template:
+    metadata:
+      labels:
+        app: camunda-autoscaler
+    spec:
+      serviceAccountName: camunda-autscaler
+      containers:
+        - name: camunda-autoscaler
+          image: roweluchi/autoscaler:latest
+          env:
+            - name: BPM_DEPLOYMENT_NAME
+              value: camunda-deployment
