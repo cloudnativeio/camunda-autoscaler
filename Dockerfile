@@ -14,6 +14,4 @@ FROM alpine:3.12.3
 
 COPY --from=builder /go/src/autoscaler /app/
 
-WORKDIR /app
-
 CMD [ "/app/autoscaler" ]

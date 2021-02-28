@@ -19,6 +19,7 @@ spec:
       containers:
         - name: camunda-autoscaler
           image: roweluchi/autoscaler:latest
+          imagePullPolicy: Always
           env:
             - name: BPM_DEPLOYMENT_NAME
               value: camunda-deployment

@@ -4,6 +4,6 @@ metadata:
   namespace: default
   name: camundata-autoscaler-role
 rules:
-  - apiGroups: [""apps""]
+  - apiGroups: ["apps"]
     resources: ["deployments"]
     verbs: ["get", "update", "patch"]
