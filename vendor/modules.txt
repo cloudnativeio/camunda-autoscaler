@@ -1,0 +1,15 @@
+# github.com/magefile/mage v1.10.0
+github.com/magefile/mage/mg
+github.com/magefile/mage/sh
+# github.com/motemen/go-loghttp v0.0.0-20170804080138-974ac5ceac27
+## explicit
+github.com/motemen/go-loghttp
+# github.com/motemen/go-nuts v0.0.0-20200601065735-3df31f16cb2f
+## explicit
+github.com/motemen/go-nuts/roundtime
+# github.com/sirupsen/logrus v1.8.0
+## explicit
+github.com/sirupsen/logrus
+# golang.org/x/sys v0.0.0-20200323222414-85ca7c5b95cd
+golang.org/x/sys/unix
+golang.org/x/sys/windows

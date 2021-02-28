@@ -1,10 +1,10 @@
 package log
 
 import (
-"os"
-"time"
+	"os"
+	"time"
 
-"github.com/sirupsen/logrus"
+	"github.com/sirupsen/logrus"
 )
 
 type GopherLogger struct {
@@ -28,4 +28,3 @@ func NewLogger() *GopherLogger {
 
 	return gopherLogger
 }
-

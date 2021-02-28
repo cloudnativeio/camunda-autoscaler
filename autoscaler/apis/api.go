@@ -2,25 +2,25 @@ package apis
 
 import (
 	"encoding/json"
-	"errors"
 	"fmt"
 	"io/ioutil"
 	"net/http"
-	"os"
 )
 
-func (c *Client)GetProcess() (interface{}, error){
-	url := os.Getenv("URL")
-	client, err := c.client("Getting process instance: ")
-	if err != nil {
-		return nil, errors.New("failed to instantiate client")
-	}
+const (
+	baseURL = "http://localhost:8080/engine-rest"
+	path    = "history/process-instance/count"
+)
 
-	req, err := http.NewRequest(http.MethodGet, fmt.Sprintf("%s/%s", url, "engine-rest/history/process-instance/count"), nil)
+func GetProcess() (interface{}, error) {
+	client := http.Client{}
+
+	req, err := http.NewRequest(http.MethodGet, fmt.Sprintf("%s/%s", baseURL, path), nil)
 	if err != nil {
 		return nil, fmt.Errorf("error creating the request: %s", err)
 	}
 	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("User-Agent", "autoscaler")
 
 	resp, err := client.Do(req)
 	if err != nil {
