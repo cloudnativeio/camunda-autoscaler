@@ -8,10 +8,12 @@ ENV GCO_ENABLED=0
 
 COPY ./ /go/src/
 
-RUN go build -v -o autoscaler main.go
+RUN go build -v -o camunda-autoscaler main.go
 
 FROM alpine:3.12.3
 
-COPY --from=builder /go/src/autoscaler /app/
+COPY --from=builder /go/src/camunda-autoscaler /app/
 
-CMD [ "/app/autoscaler" ]
+WORKDIR /app
+
+ENTRYPOINT [ "/app/camunda-autoscaler" ]

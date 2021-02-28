@@ -10,7 +10,11 @@ import (
 	"github.com/trx35479/camunda-autoscaler/autoscaler/log"
 )
 
-type Spec struct {
+type Deploy struct {
+	Spec interface{} `json:"spec"`
+}
+
+type Specification struct {
 	Replicas int `json:"replicas"`
 }
 
@@ -25,12 +29,9 @@ var (
 )
 
 func Handler() error {
-	count, err := apis.GetProcess()
-	if err != nil {
-		logger.Fatal("getProcess returns error")
-	}
+	count := apis.GetProcess()
 
-	logger.Printf("count: %d", count)
+	logger.Printf("count: %v", count)
 
 	// Let's get the replica here
 	serviceAcctToken, err := ioutil.ReadFile(fmt.Sprintf("%s/%s", ServiceAccountPath, "token"))
@@ -55,11 +56,11 @@ func Handler() error {
 		return err
 	}
 
-	if count.(int) >= 50 {
+	if count >= 50 {
 		if replicas.(int) < 4 {
 			number := replicas.(int) + 1
-			spec := &Spec{
-				Replicas: number,
+			spec := &Deploy{
+				Spec: Specification{Replicas: number},
 			}
 			payload, _ := json.Marshal(spec)
 			logger.Printf("scaling replica to %d: ", number)
@@ -68,15 +69,17 @@ func Handler() error {
 				return err
 			}
 			logger.Printf("set replicas to: %d", scale)
+		} else {
+			logger.Printf("not scaling up as the current replica is equal to: %v", replicas)
 		}
 
 	}
 
-	if count.(int) <= 20 {
+	if count <= 20 {
 		if replicas.(int) > 1 {
 			number := replicas.(int) - 1
-			spec := &Spec{
-				Replicas: number,
+			spec := &Deploy{
+				Spec: Specification{Replicas: number},
 			}
 			payload, _ := json.Marshal(spec)
 			logger.Printf("scaling replica to %d: ", number)
@@ -86,7 +89,8 @@ func Handler() error {
 			}
 			logger.Printf("set replicas to: %d", scale)
 		}
-
+	} else {
+		logger.Printf("not scaling down as the process count is more that: %v", count)
 	}
 
 	return nil

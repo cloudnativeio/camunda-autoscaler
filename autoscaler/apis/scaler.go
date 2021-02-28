@@ -15,10 +15,10 @@ func (c *Client) GetReplica(token, kubeHost, ns, name string) (interface{}, erro
 		return nil, fmt.Errorf("error instantiating client: %s", err)
 	}
 
-	requestUrl := fmt.Sprintf("https://%s/apis/apps/v1/namespaces/%s/deployments/%s", kubeHost, ns, name)
-	req, err := http.NewRequest(http.MethodGet, requestUrl, nil)
+	requestURL := fmt.Sprintf("https://%s/apis/apps/v1/namespaces/%s/deployments/%s", kubeHost, ns, name)
+	req, err := http.NewRequest(http.MethodGet, requestURL, nil)
 	if err != nil {
-		return nil, fmt.Errorf("failed to construct request to kubernetes api: %s", requestUrl)
+		return nil, fmt.Errorf("failed to construct request to kubernetes api: %s", requestURL)
 	}
 	req.Header.Set("Accept", "application/json")
 	req.Header.Set("Content-Type", "application/json")
@@ -50,11 +50,11 @@ func (c *Client) SetReplica(token, kubeHost, ns, name string, payload []byte) (i
 	if err != nil {
 		return nil, fmt.Errorf("error instantiating client: %s", err)
 	}
-	requestUrl := fmt.Sprintf("https://%s/apis/apps/v1/namespaces/%s/deployments/%s", kubeHost, ns, name)
+	requestURL := fmt.Sprintf("https://%s/apis/apps/v1/namespaces/%s/deployments/%s", kubeHost, ns, name)
 
-	req, err := http.NewRequest(http.MethodPatch, requestUrl, bytes.NewBuffer(payload))
+	req, err := http.NewRequest(http.MethodPatch, requestURL, bytes.NewBuffer(payload))
 	if err != nil {
-		return nil, fmt.Errorf("failed to construct request to kubernetes api: %s", requestUrl)
+		return nil, fmt.Errorf("failed to construct request to kubernetes api: %s", requestURL)
 	}
 
 	req.Header.Set("Accept", "application/json")
